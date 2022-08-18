@@ -38,7 +38,7 @@ set_property(TARGET ckconv PROPERTY CXX_STANDARD 20)
 set_property(TARGET ckconv PROPERTY CXX_STANDARD_REQUIRED ON)
 
 if (MSVC)
-	target_compile_options(ckconv PRIVATE "/Zc:__cplusplus" "/Zc:preprocessor")
+	target_compile_options(ckconv PRIVATE "/Zc:__cplusplus" "/Zc:preprocessor" "/permissive-")
 endif()
 
 target_sources(ckconv PRIVATE "${HEADERS}")
