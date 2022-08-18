@@ -121,7 +121,7 @@ namespace ckconv {
 			}
 			else tpl = std::make_tuple(input[i], input[i + 1], input[i + 2]);
 
-			if (const auto& fst{ std::get<0>(tpl) }; std::all_of(fst.begin(), fst.end(), [](auto&& ch) { return str::stdpred::isdigit(ch) || ch == '-' || ch == '.'; })) {
+			if (const auto fst{ std::get<0>(tpl) }; std::all_of(fst.begin(), fst.end(), [](auto&& ch) { return str::stdpred::isdigit(ch) || ch == '-' || ch == '.'; })) {
 				// reorder inputs
 				std::get<0>(tpl) = std::get<1>(tpl);
 				std::get<1>(tpl) = fst;
