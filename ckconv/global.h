@@ -1,5 +1,6 @@
 #pragma once
 #include <color-sync.hpp>
+#include <simpleINI.hpp>
 
 #include <sstream>
 
@@ -8,10 +9,12 @@ namespace ckconv {
 		/// @brief	Color synchronization object
 		color::sync csync{};
 
-		/// @brief	Color used for input numbers & units
+		/// @brief	Color used for input numbers
 		color::setcolor InputColor{ color::cyan };
-		/// @brief	Color used for output numbers & units
+		/// @brief	Color used for output numbers
 		color::setcolor ResultColor{ color::green };
+		/// @brief	Color used for units
+		color::setcolor UnitColor{};
 		/// @brief	Color used for headers in the units list
 		color::setcolor HeaderColor{ color::intense_white  };
 		/// @brief	Color used for generic accents used in various places
@@ -83,14 +86,14 @@ namespace ckconv {
 				//                                    ▲▲▲▲    account for this space      |
 				ss//                                                                      ▼
 					<< global.csync(global.InputColor) << inValue_s << global.csync() << ' '
-					<< global.csync(global.InputColor) << inUnit_s << global.csync()
+					<< global.csync(global.UnitColor) << inUnit_s << global.csync()
 					<< indent(margin, used) << " = "
 					;//                         ▲ (space before equals sign)
 			}
 
 			ss
 				<< global.csync(global.ResultColor) << outValue_s << global.csync() << ' '
-				<< global.csync(global.ResultColor) << outUnit_s << global.csync()
+				<< global.csync(global.UnitColor) << outUnit_s << global.csync()
 				;
 
 			return ss.str();

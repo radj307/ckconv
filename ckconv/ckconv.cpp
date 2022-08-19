@@ -62,6 +62,8 @@ int main(const int argc, char** argv)
 	env::PATH pathVar;
 	const auto& [programPath, programName] { pathVar.resolve_split(argv[0]) };
 
+	const auto& cfgPath{ programPath / std::filesystem::path{ programName }.replace_extension(".ini") };
+
 	try {
 		opt3::ArgManager args{ argc, argv,
 			opt3::make_template('p', "precision").captureStyle(opt3::CaptureStyle::Required),
@@ -151,11 +153,11 @@ int main(const int argc, char** argv)
 		else throw make_exception("No valid conversions specified!");
 
 		return 0;
-	} catch (const std::exception& ex) {
-		std::cerr << global.csync.get_fatal() << ex.what() << std::endl;
-		return 1;
-	} catch (...) {
-		std::cerr << global.csync.get_fatal() << "An undefined exception occurred!" << std::endl;
-		return 1;
+		} catch (const std::exception& ex) {
+			std::cerr << global.csync.get_fatal() << ex.what() << std::endl;
+			return 1;
+		} catch (...) {
+			std::cerr << global.csync.get_fatal() << "An undefined exception occurred!" << std::endl;
+			return 1;
+		}
 	}
-}
