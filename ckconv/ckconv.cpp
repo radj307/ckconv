@@ -14,7 +14,6 @@ struct Help {
 	{
 		return os
 			<< "Creation Kit Unit Converter (ckconv) v" << ckconv_VERSION_EXTENDED << '\n'
-			<< "  " << '\n'
 			<< '\n'
 			<< "USAGE:" << '\n'
 			<< "  " << h.programName << " [OPTIONS] [<UNIT> <VALUE> <OUTPUT_UNIT> ...]\n"
@@ -84,6 +83,8 @@ int main(const int argc, char** argv)
 		// -h | --help
 		if (const auto& noArgsProvided{ args.empty() }; noArgsProvided || args.check_any<opt3::Flag, opt3::Option>('h', "help")) {
 			std::cout << Help(programName.generic_string());
+			if (noArgsProvided)
+				std::cerr << term::get_fatal(false) << "No arguments provided!" << std::endl;
 			return 0;
 		}
 		// -v | --version

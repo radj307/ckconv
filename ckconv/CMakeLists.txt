@@ -15,7 +15,7 @@ file(GLOB SRCS
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/rc")
 
 file(REMOVE "${CMAKE_CURRENT_SOURCE_DIR}/rc/version.h")
-MAKE_VERSION_HEADER("${CMAKE_CURRENT_SOURCE_DIR}/rc/version.h" "ckconv" "${ckconv_VERSION}")
+MAKE_VERSION_HEADER("${CMAKE_CURRENT_SOURCE_DIR}/rc/version.h" "ckconv" "${ckconv_VERSION_EXTENDED}")
 
 if (WIN32)
 	set(ckconv_rc "${CMAKE_CURRENT_SOURCE_DIR}/rc/ckconv.rc")
