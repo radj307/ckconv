@@ -60,15 +60,14 @@ namespace ckconv {
 				for (const auto& c : s) {
 					if (str::stdpred::isdigit(c))
 						digit = true;
-					else if (str::stdpred::isalpha(c))
+					else if (str::stdpred::isalpha(c) || c == '\'' || c == '\"')
 						alpha = true;
 					else if (c == '.') {
 						if (++decimalPointCount > 1)
 							throw make_exception("Input '", s, "' isn't valid! (Too many decimal places)");
 					}
 					else if (c == '-') {
-						if (digit)
-							throw make_exception("Input '", s, "' isn't valid! (Negative sign must precede number)");
+						if (digit) throw make_exception("Input '", s, "' isn't valid! (Negative sign must precede number)");
 					}
 					else {
 						invalid = true;

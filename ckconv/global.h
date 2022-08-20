@@ -94,8 +94,7 @@ namespace ckconv {
 			ss << global.csync(global.ResultColor) << outValue_s << global.csync();
 
 			if (!global.quiet)
-				ss 
-				<< ' ' << global.csync(global.UnitColor) << outUnit_s << global.csync();
+				ss << ' ' << global.csync(global.UnitColor) << outUnit_s << global.csync();
 
 			return ss.str();
 		}

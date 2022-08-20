@@ -318,9 +318,9 @@ namespace conv {
 		if (str == "rd" || s.find("rod") < s.size())
 			return *Imperial.ROD;
 		#endif // DISABLE_NUTJOB_UNITS
-		if (str == "in" || s == "i" || s.find("inch") < s.size())
+		if (str == "\"" || str == "in" || s == "i" || s.find("inch") < s.size())
 			return *Imperial.INCH;
-		if (str == "ft" || s == "f" || s.find("foot") < s.size() || s.find("feet") < s.size())
+		if (str == "\'" || str == "ft" || s == "f" || s.find("foot") < s.size() || s.find("feet") < s.size())
 			return *Imperial.FOOT;
 		if (str == "yd" || s.find("yard") < s.size())
 			return *Imperial.YARD;
