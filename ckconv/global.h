@@ -16,7 +16,7 @@ namespace ckconv {
 		/// @brief	Color used for units
 		color::setcolor UnitColor{};
 		/// @brief	Color used for headers in the units list
-		color::setcolor HeaderColor{ color::intense_white  };
+		color::setcolor HeaderColor{ color::intense_white };
 		/// @brief	Color used for generic accents used in various places
 		color::setcolor AccentColor{ color::intense_yellow };
 
@@ -91,10 +91,11 @@ namespace ckconv {
 					;//                         ▲ (space before equals sign)
 			}
 
-			ss
-				<< global.csync(global.ResultColor) << outValue_s << global.csync() << ' '
-				<< global.csync(global.UnitColor) << outUnit_s << global.csync()
-				;
+			ss << global.csync(global.ResultColor) << outValue_s << global.csync();
+
+			if (!global.quiet)
+				ss 
+				<< ' ' << global.csync(global.UnitColor) << outUnit_s << global.csync();
 
 			return ss.str();
 		}
