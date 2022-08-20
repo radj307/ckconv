@@ -5,6 +5,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/307lib/307modules")
 
 include(VersionTag)
 set(ENV{ckconv_VERSION} "0.0.0")
+GET_VERSION_TAG("${CMAKE_CURRENT_SOURCE_DIR}" "ckconv")
 
 project("ckconv" VERSION "${ckconv_VERSION}" LANGUAGES CXX)
 

@@ -82,7 +82,7 @@ int main(const int argc, char** argv)
 		global.csync.setEnabled(!args.check_any<opt3::Flag, opt3::Option>('n', "no-color"));
 
 		// -h | --help
-		if (/*args.empty() || */args.check_any<opt3::Flag, opt3::Option>('h', "help")) {
+		if (const auto& noArgsProvided{ args.empty() }; noArgsProvided || args.check_any<opt3::Flag, opt3::Option>('h', "help")) {
 			std::cout << Help(programName.generic_string());
 			return 0;
 		}
@@ -154,10 +154,10 @@ int main(const int argc, char** argv)
 
 		return 0;
 		} catch (const std::exception& ex) {
-			std::cerr << global.csync.get_fatal() << ex.what() << std::endl;
+			std::cerr << term::get_fatal(false) << ex.what() << std::endl;
 			return 1;
 		} catch (...) {
-			std::cerr << global.csync.get_fatal() << "An undefined exception occurred!" << std::endl;
+			std::cerr << term::get_fatal(false) << "An undefined exception occurred!" << std::endl;
 			return 1;
 		}
 	}
