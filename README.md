@@ -11,8 +11,9 @@
   - Windows
   - Linux
   - macOS
-- 
-  
+- Supports Metric, Imperial, and Creation Kit measurement units
+- Can be embedded in other programs
+
 
 If you're new to using CLI programs, see the [beginners guide](https://github.com/radj307/ckconv/wiki#detailed-usage-guide-for-less-experienced-terminal-users).
 
