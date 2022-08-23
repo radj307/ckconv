@@ -4,7 +4,7 @@
   
 
   
-<p align="center">This is a commandline utility that converts between common length measurement units & Bethesda's arbitrary <a href="https://www.creationkit.com/index.php?title=Unit"><i>Unit</i></a></p>
+<p align="center">This is a commandline utility that converts between common length measurement units & Bethesda's eponymous <a href="https://www.creationkit.com/index.php?title=Unit"><i>Unit</i></a></p>
   
 ## Features
 - Cross-Platform:
