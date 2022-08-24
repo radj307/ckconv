@@ -13,7 +13,7 @@
 namespace ckconv {
 	inline std::ostream& operator<<(std::ostream& os, const conv::Unit& unit)
 	{
-		return os << (global.useFullNames ? unit.getName() : unit.getSymbol());
+		return os << (global.useFullNames ? unit.GetFullName() : unit.GetSymbol());
 	}
 
 	template<conv::SystemID System>
@@ -39,11 +39,11 @@ namespace ckconv {
 					;
 				int power{ -12 };
 				for (const auto& unit : conv::CreationKit.units) {
-					const auto& symbol{ (unit.hasName() ? unit.getSymbol() : ""s) }, name{ unit.getName() };
+					const auto& symbol{ (unit.HasFullName() ? unit.GetSymbol() : ""s) }, name{ unit.GetFullName() };
 					ss
 						<< "  " << symbol << indent(symbol_indent_postfix, symbol.size())
 						<< name << indent(name_indent_postfix, name.size())
-						<< unit.unitcf << ' ' << *conv::CreationKit.base
+						<< unit.GetConversionFactor() << ' ' << *conv::CreationKit.base
 						<< '\n';
 				}
 				if (!fallthrough) break;
@@ -59,11 +59,11 @@ namespace ckconv {
 					;
 				int power{ -12 };
 				for (const auto& unit : conv::Metric.units) {
-					const auto& symbol{ (unit.hasName() ? unit.getSymbol() : ""s) }, name{ unit.getName() };
+					const auto& symbol{ (unit.HasFullName() ? unit.GetSymbol() : ""s) }, name{ unit.GetFullName() };
 					ss
 						<< "  " << symbol << indent(symbol_indent_postfix, symbol.size())
 						<< name << indent(name_indent_postfix, name.size())
-						<< unit.unitcf << ' ' << *conv::Metric.base
+						<< unit.GetConversionFactor() << ' ' << *conv::Metric.base
 						<< '\n';
 					power += (power < 3 || power > 3 ? 3 : 1);
 				}
@@ -79,11 +79,11 @@ namespace ckconv {
 					<< "  --------------------------------------\n"
 					;
 				for (const auto& unit : conv::Imperial.units) {
-					const auto& symbol{ (unit.hasName() ? unit.getSymbol() : ""s) }, name{ unit.getName() };
+					const auto& symbol{ (unit.HasFullName() ? unit.GetSymbol() : ""s) }, name{ unit.GetFullName() };
 					ss
 						<< "  " << symbol << indent(symbol_indent_postfix, symbol.size())
 						<< name << indent(name_indent_postfix, name.size())
-						<< unit.unitcf << ' ' << *conv::Imperial.base
+						<< unit.GetConversionFactor() << ' ' << *conv::Imperial.base
 						<< '\n';
 				}
 				if (!fallthrough) break;
@@ -111,7 +111,7 @@ namespace ckconv {
 			if (str::equalsAny<true>(systemName, "creationkit", "ck", "creation-kit", "creation_kit", "gamebryo", "engine", "bethesda"))
 				return conv::SystemID::CREATIONKIT;
 
-			return conv::getUnit(systemName, DEFAULT_UNIT).getSystem();
+			return conv::getUnit(systemName, DEFAULT_UNIT).GetSystemID();
 		}
 
 		conv::SystemID system;

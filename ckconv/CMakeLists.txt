@@ -35,7 +35,7 @@ endif()
 
 add_executable (ckconv "${SRCS}" "${ckconv_rc}" "rc/version.h")
 
-set_property(TARGET ckconv PROPERTY CXX_STANDARD 20)
+set_property(TARGET ckconv PROPERTY CXX_STANDARD 23)
 set_property(TARGET ckconv PROPERTY CXX_STANDARD_REQUIRED ON)
 
 if (MSVC)
@@ -44,7 +44,28 @@ endif()
 
 target_sources(ckconv PRIVATE "${HEADERS}")
 
-target_link_libraries(ckconv PRIVATE TermAPI optlib filelib)
+target_link_libraries(ckconv PRIVATE TermAPI filelib)
+
+option(ckconv_DISABLE_CONFIG_FILE "Don't enable the code for the INI configuration file." FALSE)
+if (NOT ${ckconv_DISABLE_CONFIG_FILE})
+	target_compile_definitions(ckconv PRIVATE ENABLE_CONFIG_FILE)
+endif()
+
+if (${307lib_build_netlib})
+	include(FetchContent)
+	FetchContent_Declare(nlohmann_json
+		GIT_REPOSITORY https://github.com/nlohmann/json.git
+		GIT_TAG v3.11.2
+	)
+	FetchContent_Declare(cpr
+		GIT_REPOSITORY https://github.com/libcpr/cpr.git
+		GIT_TAG 1.9.1
+	)
+	FetchContent_MakeAvailable(nlohmann_json cpr)
+
+	target_link_libraries(ckconv PRIVATE nlohmann_json::nlohmann_json cpr::cpr)
+	target_compile_definitions(ckconv PRIVATE ENABLE_UPDATE_CHECK)
+endif()
 
 include(PackageInstaller)
 INSTALL_EXECUTABLE(ckconv "${CMAKE_INSTALL_PREFIX}")

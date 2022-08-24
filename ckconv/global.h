@@ -1,6 +1,5 @@
 #pragma once
 #include <color-sync.hpp>
-#include <simpleINI.hpp>
 
 #include <sstream>
 
@@ -19,6 +18,14 @@ namespace ckconv {
 		color::setcolor HeaderColor{ color::intense_white };
 		/// @brief	Color used for generic accents used in various places
 		color::setcolor AccentColor{ color::intense_yellow };
+	#ifdef ENABLE_UPDATE_CHECK
+		/// @brief	Color used to print the latest version number
+		color::setcolor NewTagColor{ color::green };
+	#endif
+	#ifdef ENABLE_CONFIG_FILE
+		color::setcolor INI_HeaderColor{ color::yellow };
+		color::setcolor INI_KeyColor{ color::cyan };
+	#endif
 
 		bool quiet{ false };
 		bool useFullNames{ false };
@@ -53,9 +60,9 @@ namespace ckconv {
 		return ss.str();
 	}
 
-	inline std::string format_unit(conv::Unit const& unit)
+	inline std::string format_unit(conv::Unit const& unit, const bool plural)
 	{
-		return  (global.useFullNames && unit.hasName() ? unit.getName() : unit.getSymbol());
+		return  (global.useFullNames && unit.HasFullName() ? unit.GetFullName() : unit.GetSymbol());
 	}
 
 	struct converted {
@@ -68,8 +75,8 @@ namespace ckconv {
 			outUnit{ outUnit },
 			inValue{ inValue },
 			outValue{ outValue },
-			inUnit_s{ format_unit(inUnit) },
-			outUnit_s{ format_unit(outUnit) },
+			inUnit_s{ format_unit(inUnit, inValue != 1.0) },
+			outUnit_s{ format_unit(outUnit, outValue != 1.0) },
 			inValue_s{ format_fp(inValue) },
 			outValue_s{ format_fp(outValue) }
 		{

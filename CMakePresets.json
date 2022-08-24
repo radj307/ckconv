@@ -1,6 +1,15 @@
 ﻿{
-    "version": 3,
+  "version": 3,
   "configurePresets": [
+    {
+      "name": "networking",
+      "hidden": true,
+      "cacheVariables": {
+        "307lib_build_netlib": true
+      }
+    },
+
+
     {
       "name": "windows-base",
       "hidden": true,
@@ -18,8 +27,8 @@
       }
     },
     {
-      "name": "x64-debug",
-      "displayName": "x64 Debug",
+      "name": "windows-debug",
+      "displayName": "Debug",
       "inherits": "windows-base",
       "architecture": {
         "value": "x64",
@@ -30,17 +39,19 @@
       }
     },
     {
-      "name": "x64-release",
-      "displayName": "x64 Release",
-      "inherits": "x64-debug",
+      "name": "windows-release",
+      "displayName": "Release",
+      "inherits": "windows-debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
     },
+
+
     {
-      "name": "x86-debug",
-      "displayName": "x86 Debug",
-      "inherits": "windows-base",
+      "name": "windows-debug-networking",
+      "displayName": "(w/netlib) Debug",
+      "inherits": [ "windows-base", "networking" ],
       "architecture": {
         "value": "x86",
         "strategy": "external"
@@ -50,16 +61,18 @@
       }
     },
     {
-      "name": "x86-release",
-      "displayName": "x86 Release",
-      "inherits": "x86-debug",
+      "name": "windows-release-networking",
+      "displayName": "(w/netlib) Release",
+      "inherits": "windows-debug-networking",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
     },
+    
+
     {
       "name": "linux-debug",
-      "displayName": "Linux Debug",
+      "displayName": "Debug",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
@@ -77,6 +90,28 @@
         }
       }
     },
+
+    {
+      "name": "linux-release",
+      "displayName": "Release",
+      "inherits": "linux-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+
+    {
+      "name": "linux-debug-networking",
+      "displayName": "(w/netlib) Debug",
+      "inherits": [ "linux-debug", "networking" ]
+    },
+
+    {
+      "name": "linux-release-networking",
+      "displayName": "(w/netlib) Release",
+      "inherits": "linux-debug-networking",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+
+
     {
       "name": "macos-debug",
       "displayName": "macOS Debug",
@@ -96,6 +131,13 @@
           "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
         }
       }
+    },
+    {
+      "name": "macos-release",
+      "displayName": "Release",
+      "inherits": "macos-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
     }
+
   ]
 }

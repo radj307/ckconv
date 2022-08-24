@@ -11,9 +11,10 @@
 #include <str.hpp>
 
 #include <algorithm>
-#include <vector>
 #include <concepts>
 #include <cmath>
+#include <filesystem>
+#include <vector>
 
 
 namespace ckconv {
@@ -47,7 +48,7 @@ namespace ckconv {
 		std::vector<std::string> vec;
 		vec.reserve(input.size());
 		for (auto it{ input.begin() }, end{ input.end() }; it != end; ++it) {
-			auto s{ str::trim(*it, " \t\v\r\n") };
+			auto s{ str::trim(std::string(*it), " \t\v\r\n"s) };
 			s.erase(std::remove(s.begin(), s.end(), ','), s.end()); //< erase all commas
 
 			bool
@@ -183,5 +184,30 @@ namespace ckconv {
 			(ss << ... << std::forward<Ts>(args));
 			return *this;
 		}
-		};
-	}
+	};
+
+	/**
+	 * @struct	pathstring
+	 * @brief	A std::filesystem::path-derived struct that exposes implicit string conversion operators so it can be used interchangably.
+	 */
+	struct pathstring : public std::filesystem::path {
+		pathstring() noexcept {}
+		pathstring(const std::filesystem::path& p) : std::filesystem::path(p) {}
+		pathstring(std::filesystem::path&& p) noexcept : std::filesystem::path(std::forward<std::filesystem::path>(p)) {}
+		pathstring(string_type&& source, format fmt = auto_format) : std::filesystem::path(std::forward<string_type>(source), fmt) {}
+		template<class Source>
+		pathstring(const Source& source, format fmt = auto_format) : std::filesystem::path(source, fmt) {}
+		template<class InputIt>
+		pathstring(InputIt first, InputIt last, format fmt = auto_format) : std::filesystem::path(first, last, fmt) {}
+		template<class Source>
+		pathstring(const Source& source, const std::locale& loc, format fmt = auto_format) : std::filesystem::path(source, loc, fmt) {}
+		template<class InputIt>
+		pathstring(InputIt first, InputIt last, const std::locale& loc, format fmt = auto_format) : std::filesystem::path(first, last, loc, fmt) {}
+
+		operator std::string() const { return this->generic_string(); };
+		operator std::wstring() const { return this->generic_wstring(); };
+		operator std::u8string() const { return this->generic_u8string(); };
+		operator std::u16string() const { return this->generic_u16string(); };
+		operator std::u32string() const { return this->generic_u32string(); };
+	};
+}
