@@ -4,15 +4,16 @@
   
 
   
-<p align="center">This is a commandline utility that converts between common length measurement units & Bethesda's arbitrary <a href="https://www.creationkit.com/index.php?title=Unit"><i>Unit</i></a></p>
+<p align="center">This is a commandline utility that converts between common length measurement units & Bethesda's eponymous <a href="https://www.creationkit.com/index.php?title=Unit"><i>Unit</i></a></p>
   
 ## Features
 - Cross-Platform:
   - Windows
   - Linux
   - macOS
-- 
-  
+- Supports Metric, Imperial, and Creation Kit measurement units
+- Can be embedded in other programs
+
 
 If you're new to using CLI programs, see the [beginners guide](https://github.com/radj307/ckconv/wiki#detailed-usage-guide-for-less-experienced-terminal-users).
 
