@@ -99,7 +99,7 @@ namespace conv {
 		{
 			return (preferFullName
 					? (HasFullName() ? GetFullName(plural) : GetSymbol())
-					: (HasSymbol() ? GetFullName(plural) : GetSymbol()));
+					: (!HasSymbol() ? GetFullName(plural) : GetSymbol()));
 		}
 
 		CONSTEXPR number_t ConvertToBase(number_t const& value) const noexcept { return value * unitcf; }
@@ -173,9 +173,9 @@ namespace conv {
 		virtual unit_const_iterator find(std::string const& s) const noexcept
 		{
 			for (auto it{ units.begin() }, end{ units.end() }; it != end; ++it) {
-				if (it->HasUniquePlural() && (this->compare_unit_name(s, it->GetFullName(false)) || this->compare_unit_name(s, it->GetFullName(true))))
+				if (it->HasUniquePlural() && it->HasFullName() && (this->compare_unit_name(s, it->GetFullName(false)) || this->compare_unit_name(s, it->GetFullName(true))))
 					return it;
-				if (this->compare_unit_symbol(s, it->GetSymbol()) || this->compare_unit_name(s, it->GetFullName()) || this->compare_unit_extraNames(s, it->GetExtraNames()))
+				if ((it->HasSymbol() && this->compare_unit_symbol(s, it->GetSymbol())) || (it->HasFullName() && this->compare_unit_name(s, it->GetFullName())) || (it->HasExtraNames() && this->compare_unit_extraNames(s, it->GetExtraNames())))
 					return it;
 			}
 			return units.end();

@@ -63,14 +63,23 @@ jobs:
     # Set up platform dependencies
       # Ninja
     - uses: seanmiddleditch/gha-setup-ninja@master
-      # MSVC (Windows)
     - if:   ${{ runner.os == 'Windows' }}
       uses: ilammy/msvc-dev-cmd@v1
-      # gcc-10 g++-10 zip unzip (Linux)
     - if:   ${{ runner.os == 'Linux' }}
-      run:  sudo apt-get update && sudo apt-get install gcc-11 g++-11 zip unzip -y
-      
-      
+      run:  sudo apt-get update && sudo apt-get install zip unzip build-essential flex -y
+
+      # Build gcc-12
+    - name: Build gcc-12 From Source
+      if:   ${{ runner.os == 'Linux' }}
+      run:  |
+            git clone https://gcc.gnu.org/git/gcc.git gcc-source && cd gcc-source
+            git branch -a
+            git checkout remotes/origin/releases/gcc-12
+            ./contrib/download_prerequisites
+            mkdir ../gcc-12-build && cd ../gcc-12-build
+            ./../gcc-source/configure '--prefix=${{ github.workspace }}/gcc-12-install' --enable-languages=c,c++
+            make -j16
+            
     # Configure CMake Cache
       # Windows
     - name:   Configure CMake (Windows)
@@ -81,8 +90,8 @@ jobs:
       if:     ${{ runner.os != 'Windows' }}
       run:    cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G Ninja
       env:
-        CC:   gcc-11
-        CXX:  g++-11
+        CC:   gcc-12
+        CXX:  g++-12
 
     # Build Binary
     - name: Build
