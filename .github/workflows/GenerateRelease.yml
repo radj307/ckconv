@@ -77,7 +77,7 @@ jobs:
             git checkout remotes/origin/releases/gcc-12
             ./contrib/download_prerequisites
             mkdir ../gcc-12-build && cd ../gcc-12-build
-            ./../gcc-source/configure '--prefix=${{ github.workspace }}/gcc-12-install' --enable-languages=c,c++
+            ./../gcc-source/configure '--prefix=${{ github.workspace }}/gcc-12-install' --enable-languages=c,c++ --disable-multilib
             make -j16
             
     # Configure CMake Cache
