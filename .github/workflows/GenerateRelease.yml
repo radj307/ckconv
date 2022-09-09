@@ -90,8 +90,8 @@ jobs:
       if:     ${{ runner.os != 'Windows' }}
       run:    cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G Ninja
       env:
-        CC:   gcc-12
-        CXX:  g++-12
+        CC:   ${{github.workspace}}/gcc*/bin/gcc*
+        CXX:  ${{github.workspace}}/gcc*/bin/g++*
 
     # Build Binary
     - name: Build
